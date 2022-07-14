@@ -1,3 +1,4 @@
 pdfrw
 requests
 bs4
+tldextract 

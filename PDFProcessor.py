@@ -1,6 +1,4 @@
 import pdfrw
-import requests
-import bs4
 
 
 def getLinks(filename):
@@ -13,14 +11,3 @@ def getLinks(filename):
             list.append(url)
     return list
 
-text= "geeksforgeeks"
-url = 'https://google.com/search?q=' + text
-  
-# Fetch the URL data using requests.get(url),
-# store it in a variable, request_result.
-request_result=requests.get( url )
-  
-# Creating soup from the fetched request
-soup = bs4.BeautifulSoup(request_result.text,
-                         "html.parser")
-print(soup)
