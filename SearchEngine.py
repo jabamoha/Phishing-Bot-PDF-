@@ -1,5 +1,5 @@
 import requests,bs4
-
+import os
 
 def get_result_search(keyword,n):
     # input:key words to search in google , n is the number of search's(n results...) 
@@ -23,7 +23,7 @@ def Downloading_PDF(url):
     response = requests.get(url)
     name_of_pdf=get_name_of_pdf(url)
     # Write content in pdf file
-    pdf = open('PDFRoom/'+name_of_pdf+".pdf", 'wb')
+    pdf = open('../PDFRoom/'+name_of_pdf+".pdf", 'wb')
     pdf.write(response.content)
     pdf.close()
     
@@ -40,9 +40,8 @@ def get_name_of_pdf(url):
 
 
 
-def Search_PDFs(keywords,n=15):
+def Search_PDFs(keywords,n=5):
     # the main method 
     list=get_result_search(keyword=keywords,n=n)
     for elt in list:
         Downloading_PDF(elt)    
-Search_PDFs('Login instructions')
