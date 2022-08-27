@@ -1,4 +1,15 @@
-pdfrw
+pdfx
 requests
 bs4
-tldextract 
+tldextract
+ipython
+selenium
+parsel
+webdriver-manager
+scrapy
+scrapy-selenium
+google
+PyPDF2
+flask
+validators
+pandas
