@@ -3,9 +3,21 @@ import Clone as Builder
 import SearchEngine
 import os
 from pathlib import Path
+import GetEmails
+import sys 
+
+
+args=str(sys.argv)
+sargs=''
+for i in range(1,len(args)):
+    sargs+=args[i]
+
+print(sargs)
 
 
 
+
+keyWords=args [1]
 def SearchPdf(keyword):
     my_keys_file=Path('KEYS/keywords.txt')
     if my_keys_file.exists():
@@ -15,12 +27,15 @@ def SearchPdf(keyword):
     with open('KEYS/keywords.txt','w') as f:
         f.write(keyword)
         f.close()
+    
 
     
-    NamesList=SearchEngine.Search_PDFs()
+    NamesList=SearchEngine.Search_PDFs(keyword)
     for fileName in NamesList:
         fileName=fileName+'.pdf'
         BuildServer(fileName)
+    
+    GetEmails.GetEmails()
     
 
 
@@ -33,7 +48,7 @@ Links=['https://www.linkedin.com/home/?originalSubdomain=il','https://accounts.g
 i=1
 
 
-def BuildServer (fileName):
+def BuildServer (fileName,n=5):
     Links=PDFProcessor.getLinks('PDFRoom/'+str(fileName))
     global i
     
@@ -68,7 +83,7 @@ if __name__ == '__main__':\n
     f.write(Header)
     f.write(Basic)
     
-
+    
 
     for link in Links:
         NewFileName=str(i)+'.html'
@@ -78,6 +93,9 @@ if __name__ == '__main__':\n
         f.write(NewRoute)
         NewRoute=memoryvar
         i+=1
+        if n==0:
+            break
+        n-=1
 
     f.write(End)
     f.close()
@@ -85,3 +103,4 @@ if __name__ == '__main__':\n
     print('Server file was built at app.py')
 
 
+SearchPdf(sargs)
