@@ -1,17 +1,40 @@
 import PDFProcessor
 import Clone as Builder
+import SearchEngine
+import os
+from pathlib import Path
+
+
+
+def SearchPdf(keyword):
+    my_keys_file=Path('KEYS/keywords.txt')
+    if my_keys_file.exists():
+        # remove the file using os
+        os.remove('KEYS/keywords.txt')
+    # write the keywords in a .txt file to read it for extract emails...
+    with open('KEYS/keywords.txt','w') as f:
+        f.write(keyword)
+        f.close()
+
+    
+    NamesList=SearchEngine.Search_PDFs()
+    for fileName in NamesList:
+        fileName=fileName+'.pdf'
+        BuildServer(fileName)
+    
+
+
 
 dict={}
 
 
 Links=['https://www.linkedin.com/home/?originalSubdomain=il','https://accounts.google.com/']
 
-
-
 i=1
 
 
-def BuildServer (Links):
+def BuildServer (fileName):
+    Links=PDFProcessor.getLinks('PDFRoom/'+str(fileName))
     global i
     
     Header="""from flask import render_template\n
@@ -58,8 +81,7 @@ if __name__ == '__main__':\n
 
     f.write(End)
     f.close()
+    PDFProcessor.swap_links(dict,fileName)
     print('Server file was built at app.py')
-
-BuildServer(Links)
 
 

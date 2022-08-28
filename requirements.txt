@@ -13,3 +13,6 @@ PyPDF2
 flask
 validators
 pandas
+urllib.request
+cssutils
+logging
