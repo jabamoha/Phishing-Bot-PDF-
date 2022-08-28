@@ -6,7 +6,7 @@ from time import sleep
 
 def GetEmails():
     # cd to the email_extraction dir
-    os.chdir('../email_extraction')
+    os.chdir('email_extraction')
     # sleep(1.5)
     try:
         os.remove('emails.csv')
