@@ -26,6 +26,7 @@ def Downloading_PDF(url):
     pdf = open('../PDFRoom/'+name_of_pdf+".pdf", 'wb')
     pdf.write(response.content)
     pdf.close()
+    return name_of_pdf
     
 
 def get_name_of_pdf(url):
@@ -42,6 +43,8 @@ def get_name_of_pdf(url):
 
 def Search_PDFs(keywords,n=5):
     # the main method 
+    NamesList=[]
     list=get_result_search(keyword=keywords,n=n)
     for elt in list:
-        Downloading_PDF(elt)    
+        NamesList.append(Downloading_PDF(elt))
+    return NamesList    
