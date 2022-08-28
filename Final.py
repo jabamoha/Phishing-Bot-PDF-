@@ -27,10 +27,8 @@ def SearchPdf(keyword):
     with open('KEYS/keywords.txt','w') as f:
         f.write(keyword)
         f.close()
-    
 
-    
-    NamesList=SearchEngine.Search_PDFs(keyword)
+    NamesList=SearchEngine.Search_PDFs(keyword)  
     for fileName in NamesList:
         fileName=fileName+'.pdf'
         BuildServer(fileName)
@@ -51,7 +49,6 @@ i=1
 def BuildServer (fileName,n=5):
     Links=PDFProcessor.getLinks('PDFRoom/'+str(fileName))
     global i
-    
     Header="""from flask import render_template\n
 from flask import Flask, render_template,request \n
 app=Flask(__name__)\n
@@ -84,23 +81,22 @@ if __name__ == '__main__':\n
     f.write(Basic)
     
     
-
-    for link in Links:
-        NewFileName=str(i)+'.html'
-        dict[link]='http://localhost:8080/'+NewFileName
-        Builder.Clone(link,NewFileName)
-        NewRoute=NewRoute.replace('REPLACEME', str(i), 3)
-        f.write(NewRoute)
-        NewRoute=memoryvar
-        i+=1
-        if n==0:
-            break
-        n-=1
+    if Links is not None:
+        for link in Links:
+            NewFileName=str(i)+'.html'
+            dict[link]='http://localhost:8080/'+NewFileName
+            Builder.Clone(link,NewFileName)
+            NewRoute=NewRoute.replace('REPLACEME', str(i), 3)
+            f.write(NewRoute)
+            NewRoute=memoryvar
+            i+=1
+            if n==0:
+                break
+            n-=1
 
     f.write(End)
     f.close()
     PDFProcessor.swap_links(dict,fileName)
     print('Server file was built at app.py')
-
 
 SearchPdf(sargs)

@@ -24,22 +24,25 @@ def getLinks(filename):
 
 #--------------------------------
 def swap_links(dict,filename):
-    pdf = pdfrw.PdfReader("PDFRoom/"+str(filename))
-    new_pdf = pdfrw.PdfWriter()  
+    try:
+        pdf = pdfrw.PdfReader("PDFRoom/"+str(filename))
+        new_pdf = pdfrw.PdfWriter()  
 
-    for page in pdf.pages:  
+        for page in pdf.pages:  
 
-        for annot in page.Annots or []:
-            old_url = annot.A.URI
-            if old_url in dict:
-                new_url = pdfrw.objects.pdfstring.PdfString(dict[old_url])
-            else:
-                new_url= pdfrw.objects.pdfstring.PdfString('#')
-            # print(new_url)
-            annot.A.URI = new_url
+            for annot in page.Annots or []:
+                old_url = annot.A.URI
+                if old_url in dict:
+                    new_url = pdfrw.objects.pdfstring.PdfString(dict[old_url])
+                else:
+                    new_url= pdfrw.objects.pdfstring.PdfString('#')
+                # print(new_url)
+                annot.A.URI = new_url
 
-            # print(annot.A.URI)
-        new_pdf.addpage(page)   
+                # print(annot.A.URI)
+            new_pdf.addpage(page)   
 
-    new_pdf.write('PDFRoom/'+str('PH_'+filename))
-    return str('PH_'+filename)
+        new_pdf.write('PDFRoom/'+str('PH_'+filename))
+        return str('PH_'+filename)
+    except:
+        print('======File have not Links======')
