@@ -1,7 +1,6 @@
-from ntpath import join
 import pdfx
 import validators
-
+import pdfrw
 Shtup=('gif','pdf','jpg','png','tiff','psd','raw','ai','indd')
 def getLinks(filename):
     # method to get all links in the pdf file.
@@ -20,4 +19,24 @@ def getLinks(filename):
     except:
         return None
 
-getLinks('PDFRoom/datasprings_dynamiclogin_userguide.pdf')
+
+
+
+#--------------------------------
+def swap_links(dict,filename):
+    pdf = pdfrw.PdfReader("PDFRoom/"+str(filename))
+    new_pdf = pdfrw.PdfWriter()  
+
+    for page in pdf.pages:  
+
+        for annot in page.Annots or []:
+            old_url = annot.A.URI
+            new_url = pdfrw.objects.pdfstring.PdfString(dict[old_url])
+            # print(new_url)
+            annot.A.URI = new_url
+
+            # print(annot.A.URI)
+        new_pdf.addpage(page)   
+
+    new_pdf.write('PDFRoom/'+str('PH_'+filename))
+    return str('PH_'+filename)
