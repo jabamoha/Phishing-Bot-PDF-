@@ -1,3 +1,4 @@
+from email import header
 from time import sleep
 import PDFProcessor
 import Clone as Builder
@@ -15,6 +16,27 @@ for i in range(1,len(args)):
 
 print(sargs)
 
+
+Route=''
+Header="""from flask import render_template\n
+from flask import Flask, render_template,request \n
+app=Flask(__name__)\n
+
+    """
+
+
+
+Basic="""
+@app.route('/')
+def indexREPLACEME():\n
+    return render_template("GIT.html")\n
+    """
+
+End="""
+if __name__ == '__main__':\n
+    app.run( port=8080 ,debug=True)
+
+    """
 
 
 
@@ -35,9 +57,18 @@ def SearchPdf(keyword):
         print(fileName)
         fileName=fileName+'.pdf'
         print('====================================')
-        sleep(5)
         BuildServer(fileName)
     
+    f = open("app.py", "w")
+    f.write(Header)
+    f.write(Basic)
+    f.write(Route)
+    f.write(End)
+    f.close()
+
+    
+    
+    print('Server file was built at app.py')
     GetEmails.GetEmails()
     
 
@@ -48,25 +79,13 @@ dict={}
 
 
 i=1
-
-
+ 
 def BuildServer (fileName,n=5):
     Links=PDFProcessor.getLinks('PDFRoom/'+str(fileName))
     global i
-    Header="""from flask import render_template\n
-from flask import Flask, render_template,request \n
-app=Flask(__name__)\n
+    global Route
 
-    """
-
-
-
-    Basic="""
-@app.route('/')
-def indexREPLACEME():\n
-    return render_template("GIT.html")\n
-    """
-
+   
     NewRoute="""
 @app.route('/REPLACEME')
 def indexREPLACEME():\n
@@ -75,14 +94,8 @@ def indexREPLACEME():\n
 
     memoryvar=NewRoute
 
-    End="""
-if __name__ == '__main__':\n
-    app.run( port=8080 ,debug=True)
-
-    """
-    f = open("app.py", "w")
-    f.write(Header)
-    f.write(Basic)
+ 
+    
     print('===============================Kareem ========')
     print(Links)
     if Links is not None:
@@ -91,17 +104,20 @@ if __name__ == '__main__':\n
             dict[link]='http://localhost:8080/'+NewFileName
             Builder.Clone(link,NewFileName)
             NewRoute=NewRoute.replace('REPLACEME', str(i), 3)
-            f.write(NewRoute)
+            print('===========script check =================')
+            print(NewRoute)
+            print('===========end script check =================')
+            Route+=NewRoute
+            #f.write(NewRoute)
             NewRoute=memoryvar
             i+=1
             if n==0:
                 break
             n-=1
 
-    f.write(End)
-    f.close()
+    
     PDFProcessor.swap_links(dict,str(fileName))
-    print('Server file was built at app.py')
+    
 
 
 
