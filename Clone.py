@@ -1,5 +1,4 @@
 
-
 from bs4 import BeautifulSoup
 import os
 from urllib.request import urlretrieve
@@ -10,14 +9,18 @@ import logging
 import shutil
 
 def SearchAndReplace(fileName,search_text,replace_text):
-    print('Activated')
-    with open(fileName, 'r') as file:
+    try:
+        print('Activated')
 
-        data = file.read()
-        data = data.replace(search_text, replace_text)
-  
-    with open(fileName, 'w') as file:
-        file.write(data)
+        with open(fileName, 'r') as file:
+
+            data = file.read()
+            data = data.replace(search_text, replace_text)
+    
+        with open(fileName, 'w') as file:
+            file.write(data)
+    except:
+        print('Site blocked us')
 
 
 
@@ -157,8 +160,7 @@ def Clone(baseurl,outName):
     SearchAndReplace(outName,'\\n',"")
     SearchAndReplace(outName,'\\r',"")
     SearchAndReplace(outName,"b'","")
-    shutil.move(outName, 'C:\\Users\\user\\Desktop\\Phishing-Bot-PDF-\\templates\\'+outName)
+    if os.path.exists('C:\\Users\\user\\Desktop\\Phishing-Bot-PDF-\\'+outName):
+        shutil.move(outName, 'C:\\Users\\user\\Desktop\\Phishing-Bot-PDF-\\templates\\'+outName)
     
     return 'C:\\Users\\user\\Desktop\\Phishing-Bot-PDF-\\templates\\'+outName
-
-
