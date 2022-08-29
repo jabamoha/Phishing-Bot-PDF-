@@ -25,20 +25,23 @@ def getLinks(filename):
 #--------------------------------
 def swap_links(dict,filename):
     print('=================swap href===========')
-    print(dict)
+    # print(dict)
     try:
         pdf = pdfrw.PdfReader("PDFRoom/"+str(filename))
         new_pdf = pdfrw.PdfWriter()  
 
         for page in pdf.pages:  
-
+            print('forrrrrrrrrrrrrrrrrrrrrrrrrrr')
+            print(page.Annots)
             for annot in page.Annots or []:
+                print('fotnaaaaaaaaaaaaaaaaaaaa')
                 old_url = annot.A.URI
-                if old_url in dict:
-                    print('========href-change=========')
-                    new_url = pdfrw.objects.pdfstring.PdfString('(https://www.google.com/)')
-                else:
-                    new_url= pdfrw.objects.pdfstring.PdfString('#')
+                print(old_url)
+                # if old_url in dict:
+                    # print('========href-change=========')
+                new_url = pdfrw.objects.pdfstring.PdfString('(http://google.com)')
+                # else:
+                #     new_url= pdfrw.objects.pdfstring.PdfString('#')
                 annot.A.URI = new_url
 
                 # print(annot.A.URI)
@@ -50,3 +53,5 @@ def swap_links(dict,filename):
         print('======File have not Links======')
 
 # swap_links(None,'AA.pdf')
+
+# swap_links(None,'ndss-phish-tools-final.pdf')

