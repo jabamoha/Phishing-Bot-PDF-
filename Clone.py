@@ -160,7 +160,14 @@ def Clone(baseurl,outName):
     SearchAndReplace(outName,'\\n',"")
     SearchAndReplace(outName,'\\r',"")
     SearchAndReplace(outName,"b'","")
+<<<<<<< HEAD
     if os.path.exists(os.getcwd()'\\'+outName):
         shutil.move(outName, os.getcwd()+'\\templates\\'+outName)
     
     return os.getcwd()+'\\templates\\'+outName
+=======
+    if os.path.exists('C:\\Users\\user\\Desktop\\Phishing-Bot-PDF-\\'+outName):
+        shutil.move(outName, 'C:\\Users\\user\\Desktop\\Phishing-Bot-PDF-\\templates\\'+outName)
+    
+    return 'C:\\Users\\user\\Desktop\\Phishing-Bot-PDF-\\templates\\'+outName
+>>>>>>> 4fdbeb63c74838ff8f2fc8408a11c9d587dca0e9
