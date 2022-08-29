@@ -59,12 +59,7 @@ def SearchPdf(keyword):
         print('====================================')
         BuildServer(fileName)
     
-    f = open("app.py", "w")
-    f.write(Header)
-    f.write(Basic)
-    f.write(Route)
-    f.write(End)
-    f.close()
+  
 
     
     
@@ -101,7 +96,7 @@ def indexREPLACEME():\n
     if Links is not None:
         for link in Links:
             NewFileName=str(i)+'.html'
-            dict[link]='http://localhost:8080/'+NewFileName
+            dict[link]='http://localhost:8080/'+str(i)
             Builder.Clone(link,NewFileName)
             NewRoute=NewRoute.replace('REPLACEME', str(i), 3)
             print('===========script check =================')
@@ -114,11 +109,17 @@ def indexREPLACEME():\n
             if n==0:
                 break
             n-=1
-
+    print(dict)
     
     PDFProcessor.swap_links(dict,str(fileName))
+    f = open("app.py", "w")
+    f.write(Header)
+    f.write(Basic)
+    f.write(Route)
+    f.write(End)
+    f.close()
     
 
 
 
-SearchPdf(sargs)
+#SearchPdf(sargs)

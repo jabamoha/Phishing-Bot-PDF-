@@ -32,14 +32,16 @@ def swap_links(dict,filename):
 
         for page in pdf.pages:  
             print('forrrrrrrrrrrrrrrrrrrrrrrrrrr')
-            print(page.Annots)
+            #print(page.Annots)
             for annot in page.Annots or []:
                 print('fotnaaaaaaaaaaaaaaaaaaaa')
                 old_url = annot.A.URI
                 print(old_url)
-                if old_url in dict:
+                o=str(old_url).replace(')','')
+                o=o.replace('(','')
+                if o in dict:
                     print('========href-change=========')
-                    new_url = pdfrw.objects.pdfstring.PdfString('('+dict[old_url]+')')
+                    new_url = pdfrw.objects.pdfstring.PdfString('('+dict[o]+')')
                 # else:
                 #     new_url= pdfrw.objects.pdfstring.PdfString('#')
                 annot.A.URI = new_url
