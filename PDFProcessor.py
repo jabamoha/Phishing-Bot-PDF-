@@ -12,8 +12,9 @@ def getLinks(filename):
                 old_url = annot.A.URI
                 o=str(old_url).replace(')','')
                 o=o.replace('(','')
-                l.append(o)
-               
+                if o.split('.')[-1] not in Shtup:
+                 l.append(o)
+
         return l
     except:
         return None
