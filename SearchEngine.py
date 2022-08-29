@@ -25,6 +25,7 @@ def Downloading_PDF(url):
     global index
     response = requests.get(url)
     name_of_pdf=get_name_of_pdf(url)
+    print('=========Downloading '+str(name_of_pdf+'.pdf')+' ...============')
     if not re.match("^[A-Za-z0-9_-]*$", name_of_pdf):
         index+=1
         name_of_pdf=str(index)
@@ -32,6 +33,7 @@ def Downloading_PDF(url):
     pdf = open('PDFRoom/'+name_of_pdf+".pdf", 'wb')
     pdf.write(response.content)
     pdf.close()
+    print(str(name_of_pdf)+'.pdf ============= Download Done!=============')
     return name_of_pdf
     
 
@@ -49,6 +51,7 @@ def get_name_of_pdf(url):
 
 def Search_PDFs(keywords,n=5):
     # the main method 
+    print('=============PDF SEARCH============')
     NamesList=[]
     list=get_result_search(keyword=keywords,n=n)
     for elt in list:
