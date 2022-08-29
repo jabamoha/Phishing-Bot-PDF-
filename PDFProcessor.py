@@ -5,16 +5,15 @@ Shtup=('gif','pdf','jpg','png','tiff','psd','raw','ai','indd')
 def getLinks(filename):
     # method to get all links in the pdf file.
     try:
-        pdf=pdfx.PDFx(filename)
-        p=pdf.get_references()
         l=[]
-        for i in p:
-            # the url format <url :.....>
-            s=str(i).split(' ')[1][:-1]
-            if validators.url(s):
-                # check if the url for image or...(see the tuple)
-                if s.split('.')[-1] not in Shtup:
-                    l.append(s)
+        pdf = pdfrw.PdfReader(filename)
+        for page in pdf.pages:  
+            for annot in page.Annots or []:
+                old_url = annot.A.URI
+                o=str(old_url).replace(')','')
+                o=o.replace('(','')
+                l.append(o)
+               
         return l
     except:
         return None
@@ -37,9 +36,9 @@ def swap_links(dict,filename):
                 print('fotnaaaaaaaaaaaaaaaaaaaa')
                 old_url = annot.A.URI
                 print(old_url)
-                # if old_url in dict:
-                    # print('========href-change=========')
-                new_url = pdfrw.objects.pdfstring.PdfString('(http://google.com)')
+                if old_url in dict:
+                    print('========href-change=========')
+                    new_url = pdfrw.objects.pdfstring.PdfString('('+dict[old_url]+')')
                 # else:
                 #     new_url= pdfrw.objects.pdfstring.PdfString('#')
                 annot.A.URI = new_url
@@ -54,4 +53,6 @@ def swap_links(dict,filename):
 
 # swap_links(None,'AA.pdf')
 
-# swap_links(None,'ndss-phish-tools-final.pdf')
+# swap_links(None,'AA.pdf')
+
+# print(getLinks('PDFRoom/PH_AA.pdf'))
