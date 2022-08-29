@@ -1,5 +1,7 @@
 import requests,bs4
 import os
+import re
+index=0
 
 def get_result_search(keyword,n):
     # input:key words to search in google , n is the number of search's(n results...) 
@@ -20,10 +22,14 @@ def get_result_search(keyword,n):
 
 def Downloading_PDF(url):
     # Get response object for link
+    global index
     response = requests.get(url)
     name_of_pdf=get_name_of_pdf(url)
+    if not re.match("^[A-Za-z0-9_-]*$", name_of_pdf):
+        index+=1
+        name_of_pdf=str(index)
     # Write content in pdf file
-    pdf = open('../PDFRoom/'+name_of_pdf+".pdf", 'wb')
+    pdf = open('PDFRoom/'+name_of_pdf+".pdf", 'wb')
     pdf.write(response.content)
     pdf.close()
     return name_of_pdf
