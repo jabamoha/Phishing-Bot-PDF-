@@ -7,7 +7,7 @@ def get_result_search(keyword,n):
     # input:key words to search in google , n is the number of search's(n results...) 
     #output: url's of pdf's from google 
     lis=[]
-    res=requests.get('https://google.com/search?q='+str(keyword)+' .pdf')
+    res=requests.get('https://google.com/search?q='+str(keyword)+' filetype:pdf')
     res.raise_for_status()
     soup=bs4.BeautifulSoup(res.text,"html.parser")
     # the next line to get the urls from the the search result
